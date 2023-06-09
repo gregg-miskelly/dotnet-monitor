@@ -16,13 +16,16 @@ namespace Microsoft.Diagnostics.Tools.Monitor
     /// </summary>
     internal static class TestAssemblies
     {
+#if !PUBLISH_SINGLE_FILE
         private const string ArtifactsDirectoryName = "artifacts";
         private const string TestHostingStartupAssemblyName = "Microsoft.Diagnostics.Monitoring.Tool.TestHostingStartup";
         private const string TestStartupHookAssemblyName = "Microsoft.Diagnostics.Monitoring.Tool.TestStartupHook";
+#endif
 
         [Conditional("DEBUG")]
         public static void SimulateStartupHook()
         {
+#if !PUBLISH_SINGLE_FILE
             // This code is to aid loading the TestStartupHook assembly when debug launching dotnet-monitor
             // so that additional manual configuration is not necessary. The functional tests already bootstrap
             // loading this assembly and initialize the hosting startup using standard dotnet environment variables.
@@ -41,11 +44,13 @@ namespace Microsoft.Diagnostics.Tools.Monitor
                     initializeMethod.Invoke(null, Array.Empty<object>());
                 }
             }
+#endif
         }
 
         [Conditional("DEBUG")]
         public static void AddHostingStartup(IWebHostBuilder builder)
         {
+#if !PUBLISH_SINGLE_FILE
             // Only add the TestHostingStartup assembly if the assembly can be found in the build output
             if (TryComputeBuildOutputAssemblyPath(TestHostingStartupAssemblyName, out _))
             {
@@ -62,8 +67,10 @@ namespace Microsoft.Diagnostics.Tools.Monitor
                     builder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, hostingStartupAssemblies);
                 }
             }
+#endif
         }
 
+#if !PUBLISH_SINGLE_FILE
         private static bool TryComputeBuildOutputAssemblyPath(string assemblyName, out string path)
         {
             Assembly thisAssembly = Assembly.GetExecutingAssembly();
@@ -84,5 +91,6 @@ namespace Microsoft.Diagnostics.Tools.Monitor
             path = null;
             return false;
         }
+#endif
     }
 }

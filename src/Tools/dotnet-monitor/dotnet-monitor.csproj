@@ -10,6 +10,10 @@
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(PublishSingleFile)'=='true'">
+    <DefineConstants>$(DefineConstants);PUBLISH_SINGLE_FILE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="$(AzureIdentityVersion)" />
     <PackageReference Include="Azure.Storage.Blobs" Version="$(AzureStorageBlobsVersion)" />

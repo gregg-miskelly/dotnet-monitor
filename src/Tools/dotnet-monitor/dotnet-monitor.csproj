@@ -61,6 +61,13 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <!--Don't attempt to trim out parts of our own code-->
+  <ItemGroup Condition="'$(PublishTrimmed)'=='true'">
+    <TrimmerRootAssembly Include="$(AssemblyName)" />
+    <TrimmerRootAssembly Include="Microsoft.Diagnostics.Monitoring.Options" />
+    <TrimmerRootAssembly Include="Microsoft.Diagnostics.Monitoring.WebApi" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);GatherTfmNativeFilesInPackage</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>

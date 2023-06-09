@@ -15,6 +15,8 @@
     <SignAndNotarizeRuntimeIdentifiers>osx-arm64;osx-x64</SignAndNotarizeRuntimeIdentifiers>
     <DefaultRuntimeIdentifiers>$(SignOnlyRuntimeIdentifiers);$(SignAndNotarizeRuntimeIdentifiers)</DefaultRuntimeIdentifiers>
     <DisableCustomBlobStoragePublishing Condition="'$(DisableCustomBlobStoragePublishing)' == ''">false</DisableCustomBlobStoragePublishing>
+    <!--This repo uses `TrimmerRootAssembly` so most of the trim warnings are false positives, so disable them.-->
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
